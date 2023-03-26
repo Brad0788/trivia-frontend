@@ -22,15 +22,15 @@ function decode(str) {
 function QuestionsList() {
   const [apiData, setApiData] = useState([]);
   const [apiAnswers, setApiAnswers] = useState([]);
-  const [pressed, setPressed] = useState(false);
-  const [count, setCount] = useState(0);
-  const handleClick = () => {
-    setPressed(!pressed);
-  };
 
   const shuffle = (arr) => [...arr].sort(() => Math.random() - 0.5);
 
   function QuestionsListComponent() {
+    const [pressed, setPressed] = useState(false);
+    const [count, setCount] = useState(0);
+    const handleClick = () => {
+      setPressed(!pressed);
+    };
     return (
       <div style={{ width: "85%" }}>
         {count != 5 ? (
