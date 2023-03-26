@@ -12,7 +12,7 @@ export default function LinearDeterminate() {
           clearInterval(timer);
         }
         const diff = Math.random() * 10;
-        return Math.min(oldProgress + 100 / 60, 100);
+        return Math.min(oldProgress + 100 / 20, 100);
       });
     }, 1000);
 
