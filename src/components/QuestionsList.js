@@ -8,6 +8,8 @@ import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
+import CircularProgress from "@mui/material/CircularProgress";
+import Box from "@mui/material/Box";
 import Question from "./Question";
 import { Button } from "@mui/material";
 
@@ -28,6 +30,46 @@ function QuestionsList() {
 
   const shuffle = (arr) => [...arr].sort(() => Math.random() - 0.5);
 
+  function QuestionsListComponent() {
+    return (
+      <div style={{ width: "85%" }}>
+        {count != 5 ? (
+          <Typography variant="h6">{count}</Typography>
+        ) : (
+          <Button onClick={() => window.location.reload(true)}>
+            Start Over
+          </Button>
+        )}
+        {apiData.map((data, key) => {
+          return (
+            <Question
+              question={data}
+              answers={data.all_answers}
+              correct_answer={data.correct_answer}
+              setCount={setCount}
+              count={count}
+            />
+          );
+        })}
+      </div>
+    );
+  }
+
+  function LoadingComponent() {
+    return (
+      <Box
+        sx={{
+          position: "absolute",
+          left: "50%",
+          top: "50%",
+          transform: "translate(-50%, -50%)",
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
+  }
+
   useEffect(() => {
     /*fetch(`https://opentdb.com/api.php?amount=5`)
       .then((response) => response.json())
@@ -43,24 +85,9 @@ function QuestionsList() {
   }, []);
 
   return (
-    <div style={{ width: "85%" }}>
-      {count != 5 ? (
-        <Typography variant="h6">{count}</Typography>
-      ) : (
-        <Button onClick={() => window.location.reload(true)}>Start Over</Button>
-      )}
-      {apiData.map((data, key) => {
-        return (
-          <Question
-            question={data}
-            answers={data.all_answers}
-            correct_answer={data.correct_answer}
-            setCount={setCount}
-            count={count}
-          />
-        );
-      })}
-    </div>
+    <>
+      {apiData.length > 0 ? <QuestionsListComponent /> : <LoadingComponent />}
+    </>
   );
 }
 
